@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface QuestionProps {
   title: string;
   index: number;
+  initialValue: string;
   questionType: string;
   totalQuestions: number;
   activateQuestion?: (index: number) => void;
@@ -32,8 +33,17 @@ interface ValueState {
   };
 }
 
-export default function Question({ title, index, questionType, addCompletedQuestionToForm, activateQuestion, handleSubmit }: QuestionProps) {
+export default function Question({ title, index, initialValue, questionType, addCompletedQuestionToForm, activateQuestion, handleSubmit }: QuestionProps) {
   const [value, setValue] = useState<ValueState>({});
+  const currentId = `question-${index}`;
+
+  useEffect(() => {
+    setValue({
+      [currentId]: {
+        value: initialValue,
+      },
+    });
+  }, []);
 
   const getScreen = (questionType: string) => {
     switch (questionType) {
@@ -58,13 +68,14 @@ export default function Question({ title, index, questionType, addCompletedQuest
               className="rounded px-8 py-4 border-b-blue-500 bg-gray-100"
               placeholder={constants.SHORT_TEXT.placeholder}
               type={constants.SHORT_TEXT.formType}
-              name={`question-${index}`}
-              value={value ? value[`question-${index}`]?.value : ""}
+              name={currentId}
+              // value={value ? value[currentId]?.value : ""}
+              value={value[currentId] && value[currentId].value ? value[currentId].value : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setValue((prev) => {
                   return {
                     ...prev,
-                    [`question-${index}`]: {
+                    [currentId]: {
                       value: e.target.value,
                     },
                   };
@@ -96,13 +107,13 @@ export default function Question({ title, index, questionType, addCompletedQuest
               className="rounded px-8 py-4 border-b-blue-500 bg-gray-100"
               placeholder={constants.LONG_TEXT.placeholder}
               type={constants.LONG_TEXT.formType}
-              name={`question-${index}`}
-              value={value ? value[`question-${index}`]?.value : ""}
+              name={currentId}
+              value={value[currentId] && value[currentId].value ? value[currentId].value : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setValue((prev) => {
                   return {
                     ...prev,
-                    [`question-${index}`]: {
+                    [currentId]: {
                       value: e.target.value,
                     },
                   };
@@ -126,7 +137,7 @@ export default function Question({ title, index, questionType, addCompletedQuest
       <button
         className="mt-6 rounded bg-blue-500 text-gray-50 px-2 py-1 w-24"
         onClick={() => {
-          const validatedValue = value ? value[`question-${index}`].value : "";
+          const validatedValue = value && value[currentId] ? value[currentId].value : "";
           addCompletedQuestionToForm(index, validatedValue);
           activateQuestion ? activateQuestion(index + 1) : null;
         }}

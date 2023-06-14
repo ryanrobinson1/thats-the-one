@@ -3,12 +3,13 @@ import { useState } from "react";
 import Question from "../components/survey/Question";
 import QuestionListItem from "../components/survey/QuestionListItem";
 import apiHandleSubmitSurvey from "../actions/submitSurvey";
-import { useRouter } from "next/navigation";
 
 export interface QuestionList {
   title: string;
+  description: string;
   index: number;
   questionType: string;
+  value: string;
 }
 
 export interface SurveyForm {
@@ -22,8 +23,6 @@ export interface SurveyForm {
 }
 
 export default function SurveyPage() {
-  const router = useRouter();
-
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [questionList, setQuestionList] = useState<QuestionList[]>([]);
   const [showNewQuestionMenu, setShowNewQuestionMenu] = useState(false);
@@ -45,19 +44,19 @@ export default function SurveyPage() {
   };
 
   const handleAddQuestion = (questionType: string) => {
-    setShowNewQuestionMenu(true);
-
     setQuestionList((prev) => {
       const newIndex = prev.length;
       return [
         ...prev,
         {
           title: `question-${newIndex}`,
+          description: `description for question-${newIndex}`,
           index: newIndex,
           activateQuestion: (index: number) => {
             setActiveQuestion(index);
           },
           questionType,
+          value: "",
         },
       ];
     });
@@ -107,6 +106,7 @@ export default function SurveyPage() {
           <Question
             title={title}
             index={index}
+            initialValue={form && form[`question-${index}`] ? form[`question-${index}`].value : ""}
             questionType={questionType}
             totalQuestions={questionList.length}
             addCompletedQuestionToForm={(index, value) => handleAddQuestionToForm(index, value, questionType)}
@@ -169,7 +169,8 @@ export default function SurveyPage() {
             className="mt-6 rounded bg-blue-500 text-gray-50 px-2 py-1 w-24"
             onClick={() => {
               apiHandleSubmitSurvey(form);
-              router.refresh();
+              setActiveQuestion(-1);
+              alert("successfully submitted");
             }}
           >
             Submit

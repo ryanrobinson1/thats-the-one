@@ -3,19 +3,19 @@ import Link from "next/link";
 
 export default function Home() {
   const constants = [
-    "Bug with state management when switching between screens (i'd like to react state man - useReducer if prod project)",
-    "It was my first time using Prisma so took a little time to setup and bugfix, NextJS was my first time a couple of years so again took a while, as a result I'm not entirely happy with code for this test, but i've spent a while on it - hopefully we can talk through the things i've missed",
+    "State bug - when on submit screen it removes form state if you prefer another state action",
     "Add some tests to cover the submissions of data and navigation between questions",
-    "Re-work the logic for managing screens, I didn't expect it to be difficult, proved more challenging than first thought",
+    "Re-work the logic for managing screens, I didn't expect it to be difficult, proved more challenging than first thought so a bit of spaghetti code - soz!!",
     "Add client & server side validation",
     "Build out the different types of questions",
     "Mobile design",
     "Make everything editable - title and description",
     "Drag questions to change their ordering",
-    "UX - there is no feedback that the survey was successfully saved",
+    "UX - create toast/notification when survey is successfully saved",
     "UX - there is no error handling around api calls",
     "Survey retrieves data from db",
     "Updated/Created timestamps in db",
+    "Technically didn't need to build the inputs - just needed to select them and prefill them, I misunderstood the task. I could've used that time to implement another question type. I've essentially built the consumer facing side + the admin facing side.",
   ];
 
   return (
@@ -25,6 +25,7 @@ export default function Home() {
         Create your survey
       </Link>
 
+      <h2>List of some of the things i'd change etc</h2>
       <ul>
         {constants.map((value, index) => (
           <li key={index}>- {value}</li>
