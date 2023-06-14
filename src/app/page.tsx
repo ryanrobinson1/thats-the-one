@@ -3,11 +3,10 @@ import Link from "next/link";
 
 export default function Home() {
   const constants = [
-    "State bug - when on submit screen it removes form state if you prefer another state action",
-    "Add some tests to cover the submissions of data and navigation between questions",
-    "Re-work the logic for managing screens, I didn't expect it to be difficult, proved more challenging than first thought so a bit of spaghetti code - soz!!",
-    "Add client & server side validation",
+    "I misunderstood the task so, i've built part of the user facing part as well as part of the admin facing part you asked me to build. The user facing part is the collection of input, this isn't needed but I went too far down the rabbit hole before I realised. So it's not the best piece of work",
     "Build out the different types of questions",
+    "Add some tests to cover the submissions of data and navigation between questions",
+    "Add client & server side validation",
     "Mobile design",
     "Make everything editable - title and description",
     "Drag questions to change their ordering",
@@ -15,7 +14,7 @@ export default function Home() {
     "UX - there is no error handling around api calls",
     "Survey retrieves data from db",
     "Updated/Created timestamps in db",
-    "Technically didn't need to build the inputs - just needed to select them and prefill them, I misunderstood the task. I could've used that time to implement another question type. I've essentially built the consumer facing side + the admin facing side.",
+    "Read and re-read the question 😭",
   ];
 
   return (
